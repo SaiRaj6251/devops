@@ -40,8 +40,10 @@ echo "App is Prod Ready"
 }
 }
 
-FROM nginx:alpine
-COPY . /usr/share/nginx/html/test
+
+
+
+
 
 DOCKER :-
 1.docker version
@@ -133,14 +135,7 @@ pipeline {
 save and build now and go to #1 and back
 
 
-public class Hello {  
-public static void main(String[] args) {  
-    //Code of Java for loop  
-    for(int i=1;i<=10;i++){  
-        System.out.println(i);  
-    }  
-}  
-} 
+
 
 Normal jenkins :-
 after login go to new item on top left-hand side
@@ -149,7 +144,7 @@ select freestyle project
 give description in general
 in src code mgmt tick git
 give uel and build and build step as:execute windows batch command
-in command : javac Hello.javac
+in command : javac Hello.java
             java Hello
             apply and save
 build now and select #1 and see console output
