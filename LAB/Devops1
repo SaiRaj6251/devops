@@ -1,0 +1,155 @@
+Basic Pipeline Script :
+pipeline {
+agent any
+stages {
+stage('Build') {
+steps {
+echo 'Hi, GeekFlare. Starting to build the App.'
+}
+}
+stage('Test') {
+steps {
+input('Do you want to proceed?')
+}
+}
+stage('Deploy') {
+parallel {
+stage('Deploy start ') {
+steps {
+echo "Start the deploy .."
+}
+}
+stage('Deploying now') {
+agent {
+docker {
+reuseNode true
+image ‘nginx’
+}
+}
+steps {
+echo "Docker Created"
+}
+}
+}
+}
+stage('Prod') {
+steps {
+echo "App is Prod Ready"
+}
+}
+}
+}
+
+FROM nginx:alpine
+COPY . /usr/share/nginx/html/test
+
+DOCKER :-
+1.docker version
+2. docker images
+3.docker search mysql (searching images of mysql)
+
+1.docker
+2.docker run nginx //image == information (container == actual storage and changes in hardware)...to run in bg : docker run -d nginx
+now nginx server started...but we cant access it in browser as their is no mapping between machine port(not accepting internal traffic) and container port
+3.docker run -p 80:80 nginx // mapped to that particular container
+but if terminal closed so it stops so to avoid and apply in background use :-
+docker run -d -p 8080:80 nginx
+4.to get containers in machine : docker ps
+5.use :docker stop ID(not full), to kill the container
+6.docker ps -a :- all the containers that are stopped
+7. to allow a port use :- ufw allow 5000
+8. to make a new conatainer :- docker run alpine
+9. to remove a conatiner from docker ps -a :-
+	docker rm ID
+10.(we can say container is a machine..not actually)
+11. docker system prune // to remove all stopped conatiner
+12. to forcefully stop or kill :- docker rm -f 7f...cant be removed by rm 
+13.docker exec -it ID bash // bash command runned in ID..WE GO IN CONTAINER
+apt update
+apt install vim
+vim sairaj.txt ...written something
+now machine IP shown
+to copy to and from container : docker cp <source> <dest>
+					   1f12:sairaj.txt harry.txt
+harry.txt is made
+
+vim 7.txt //made 
+docker exec -it 1f12 bash //takes inside container..it==interactive
+docker cp 7.txt 1f12:6.txt
+vim 6.txt // to check
+
+all this can be made as an image or committed by :-
+docker commit 1f12 ...(to exit a container use exit)..commit and image made
+docker images
+
+to make a image as container :- docker run -d  49(ID)
+docker ps
+docker exec -it ID
+docker exec -it ID bash
+ls ...to check if images are committed
+
+
+shreyas :-
+Dockerfile : FROM nginx:alpine
+	     COPY . /usr/share/nginx/html/test
+docker build -t html
+docker images
+docker run -p 8080:80 -d html
+docker ps
+
+pipeline {
+    agent { 
+        node {
+            label 'docker-agent-python'
+            }
+      }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building.."
+                sh '''
+                echo "doing build stuff.."
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                sh '''
+                echo "doing test stuff.."
+                '''
+            }
+        }
+        stage('Deliver') {
+            steps {
+                echo 'Deliver....'
+                sh '''
+                echo "doing delivery stuff.."
+                '''
+            }
+        }
+    }
+}
+save and build now and go to #1 and back
+
+
+public class Hello {  
+public static void main(String[] args) {  
+    //Code of Java for loop  
+    for(int i=1;i<=10;i++){  
+        System.out.println(i);  
+    }  
+}  
+} 
+
+Normal jenkins :-
+after login go to new item on top left-hand side
+enter hello world as item name or any
+select freestyle project
+give description in general
+in src code mgmt tick git
+give uel and build and build step as:execute windows batch command
+in command : javac Hello.javac
+            java Hello
+            apply and save
+build now and select #1 and see console output
